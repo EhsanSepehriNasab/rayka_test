@@ -9,6 +9,22 @@ functions:
   api:
     handler: bin/main
 
+resources:
+  Resources:
+    devices:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: devices_ehsansepehri
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+          
 package:
   patterns:
     - '!*/**'
