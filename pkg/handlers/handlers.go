@@ -20,7 +20,7 @@ func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient d
 	*events.APIGatewayProxyResponse, error,
 ) {
 
-	id := req.QueryStringParameters["id"]
+	id := req.PathParameters["id"]
 	if id != "" {
 		result, err := device.FetchDevice(id, tableName, dynaClient)
 		if err != nil {
@@ -66,7 +66,7 @@ func UpdateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 func DeleteDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse, error,
 ) {
-	id := req.QueryStringParameters["id"]
+	id := req.PathParameters["id"]
 	err := device.DeleteDevice(id, tableName, dynaClient)
 
 	if err != nil {
