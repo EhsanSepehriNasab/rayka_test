@@ -21,19 +21,10 @@ func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient d
 ) {
 
 	id := req.PathParameters["id"]
-	if id != "" {
-		result, err := device.FetchDevice(id, tableName, dynaClient)
-		if err != nil {
-			return utils.APIResponse(http.StatusBadRequest, ErrorBody{aws.String(err.Error())})
-		}
-		return utils.APIResponse(http.StatusOK, result)
-	}
 
-	result, err := device.FetchDevices(tableName, dynaClient)
+	result, err := device.FetchDevice(id, tableName, dynaClient)
 	if err != nil {
-		return utils.APIResponse(http.StatusBadRequest, ErrorBody{
-			aws.String(err.Error()),
-		})
+		return utils.APIResponse(http.StatusBadRequest, ErrorBody{aws.String(err.Error())})
 	}
 	return utils.APIResponse(http.StatusOK, result)
 

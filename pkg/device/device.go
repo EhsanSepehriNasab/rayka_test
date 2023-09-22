@@ -51,20 +51,11 @@ func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*D
 	if err != nil {
 		return nil, errors.New(ErrorFailedToUnmarshalRecord)
 	}
-	return item, nil
-}
 
-func FetchDevices(tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*[]Device, error) {
-	input := &dynamodb.ScanInput{
-		TableName: aws.String(tableName),
+	if item == nil || item.ID == "" {
+		return nil, errors.New(ErrorDeviceDoesNotExist)
 	}
 
-	result, err := dynaClient.Scan(input)
-	if err != nil {
-		return nil, errors.New(ErrorFailedToFetchRecord)
-	}
-	item := new([]Device)
-	err = dynamodbattribute.UnmarshalListOfMaps(result.Items, item)
 	return item, nil
 }
 
@@ -107,8 +98,9 @@ func UpdateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 		return nil, errors.New(ErrorInvalidDeviceData)
 	}
 
-	currentDevice, _ := FetchDevice(d.ID, tableName, dynaClient)
-	if currentDevice == nil {
+	_, err := FetchDevice(d.ID, tableName, dynaClient)
+
+	if err != nil {
 		return nil, errors.New(ErrorDeviceDoesNotExist)
 	}
 
