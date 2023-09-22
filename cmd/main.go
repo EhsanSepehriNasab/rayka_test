@@ -31,7 +31,8 @@ func main() {
 	lambda.Start(handler)
 }
 
-const tableName = "devices_ehsansepehri"
+/* Define Dynamo tablename */
+var tableName = "devices_ehsansepehri"
 
 /* Initalize Api Gateway handler */
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
