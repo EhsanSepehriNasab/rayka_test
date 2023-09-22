@@ -24,10 +24,10 @@ const (
 
 type Device struct {
 	ID          string `json:"id"`
-	DeviceModel string `json:"email"`
+	DeviceModel string `json:"deviceModel"`
 	Name        string `json:"name"`
 	Note        string `json:"note"`
-	Serial      string `json:"serail"`
+	Serial      string `json:"serial"`
 }
 
 func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*Device, error) {
@@ -108,7 +108,7 @@ func UpdateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 	}
 
 	currentDevice, _ := FetchDevice(d.ID, tableName, dynaClient)
-	if currentDevice != nil {
+	if currentDevice == nil {
 		return nil, errors.New(ErrorDeviceDoesNotExist)
 	}
 
