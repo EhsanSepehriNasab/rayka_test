@@ -7,7 +7,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
@@ -19,12 +18,9 @@ var (
 
 func main() {
 	region := os.Getenv("AWS_REGION")
-	accessKeyId := os.Getenv("AWS_ACCESS_KEY_ID")
-	secretAccessKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
 
 	awsSession, err := session.NewSession(&aws.Config{
-		Region:      aws.String(region),
-		Credentials: credentials.NewSharedCredentials(accessKeyId, secretAccessKey),
+		Region: aws.String(region),
 	})
 
 	if err != nil {
@@ -34,7 +30,7 @@ func main() {
 	lambda.Start(handler)
 }
 
-const tableName = "devices_rayka_test_eh"
+const tableName = "devices_rayka_test_ehsan_sepehri"
 
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	switch req.HTTPMethod {
