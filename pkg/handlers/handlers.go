@@ -10,12 +10,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
 )
 
+/* Declearing Errors varibles */
 var ErrorMethodNotAllowed = "method not allowed"
 
+/* Declearing Structs */
 type ErrorBody struct {
 	ErrorMsg *string `json:"error,omitempty"`
 }
 
+/* Device funtion handlers */
 func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse, error,
 ) {
@@ -68,6 +71,7 @@ func DeleteDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 	return utils.APIResponse(http.StatusOK, nil)
 }
 
+/* UnhandledMethod handler */
 func UnhandledMethod() (*events.APIGatewayProxyResponse, error) {
 	return utils.APIResponse(http.StatusMethodNotAllowed, ErrorMethodNotAllowed)
 }

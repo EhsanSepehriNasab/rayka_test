@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
 )
 
+/* Declearing Errors varibles */
 const (
 	ErrorFailedToUnmarshalRecord = "failed to unmarshal record"
 	ErrorFailedToFetchRecord     = "failed to fetch record"
@@ -22,6 +23,7 @@ const (
 	ErrorDeviceDoesNotExist      = "device does not exist"
 )
 
+/* Declearing Structs */
 type Device struct {
 	ID          string `json:"id"`
 	DeviceModel string `json:"deviceModel"`
@@ -30,8 +32,8 @@ type Device struct {
 	Serial      string `json:"serial"`
 }
 
+/* Device funtion models */
 func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*Device, error) {
-
 	input := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {

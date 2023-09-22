@@ -16,6 +16,7 @@ var (
 	dynaClient dynamodbiface.DynamoDBAPI
 )
 
+/* Initalize AWS lambda seesion */
 func main() {
 	region := os.Getenv("AWS_REGION")
 
@@ -30,8 +31,9 @@ func main() {
 	lambda.Start(handler)
 }
 
-const tableName = "devices_rayka_test_ehsan_sepehri"
+const tableName = "devices_ehsansepehri"
 
+/* Initalize Api Gateway handler */
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	switch req.HTTPMethod {
 	case "GET":
